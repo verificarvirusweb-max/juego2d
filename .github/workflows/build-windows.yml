@@ -1,0 +1,23 @@
+name: build-windows
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build release
+        run: cargo build --release -p breakout2d
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: breakout2d-windows
+          path: target/release/breakout2d.exe
